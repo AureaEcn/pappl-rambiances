@@ -18,7 +18,7 @@
  */
 package com.lam_delille.pappl_rambiances.common;
 
-import com.lam_delille.pappl_rambiances.data.ARData;
+import com.lam_delille.pappl_rambiances.data.SpatialData;
 
 /**
  * A static class used to calculate azimuth, pitch, and roll given a rotation
@@ -100,7 +100,7 @@ public class Navigation {
 
         float x = 0;
         float y = 0;
-        int angle = ARData.getDeviceOrientationAngle();
+        int angle = SpatialData.getDeviceOrientationAngle();
         if (angle>=0 && angle<90) {
             x = (angle*unitPerDegree)-1;
             y = 1-(angle*unitPerDegree);

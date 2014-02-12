@@ -21,7 +21,7 @@ import com.lam_delille.pappl_rambiances.common.LowPassFilter;
 import com.lam_delille.pappl_rambiances.common.Matrix;
 import com.lam_delille.pappl_rambiances.common.Navigation;
 import com.lam_delille.pappl_rambiances.common.Orientation;
-import com.lam_delille.pappl_rambiances.data.ARData;
+import com.lam_delille.pappl_rambiances.data.SpatialData;
 
 /**
  * This class extends Activity and processes sensor data and location data.
@@ -35,7 +35,8 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 
     private static final int MIN_TIME = 30 * 1000;
     private static final int MIN_DISTANCE = 10;
-
+    public static boolean useDataSmoothing = true;
+    
     private static final float temp[] = new float[9]; // Temporary rotation matrix in Android format
     private static final float rotation[] = new float[9]; // Final rotation matrix in Android format
     private static final float grav[] = new float[3]; // Gravity (a.k.a accelerometer data)
@@ -64,7 +65,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
      * {@inheritDoc}
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
@@ -117,14 +118,14 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
                     Location network = locationMgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (gps != null) onLocationChanged(gps);
                     else if (network != null) onLocationChanged(network);
-                    else onLocationChanged(ARData.hardFix);
+                    else onLocationChanged(SpatialData.hardFix);
                 } catch (Exception ex2) {
-                    onLocationChanged(ARData.hardFix);
+                    onLocationChanged(SpatialData.hardFix);
                 }
 
-                gmf = new GeomagneticField((float) ARData.getCurrentLocation().getLatitude(), 
-                                           (float) ARData.getCurrentLocation().getLongitude(),
-                                           (float) ARData.getCurrentLocation().getAltitude(), 
+                gmf = new GeomagneticField((float) SpatialData.getCurrentLocation().getLatitude(), 
+                                           (float) SpatialData.getCurrentLocation().getLongitude(),
+                                           (float) SpatialData.getCurrentLocation().getAltitude(), 
                                            System.currentTimeMillis());
 
                 float dec = (float)Math.toRadians(-gmf.getDeclination());
@@ -211,7 +212,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
         if (!computing.compareAndSet(false, true)) return;
 
         if (evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-        	if (AugmentedReality.useDataSmoothing) { 
+        	if (useDataSmoothing) { 
 	            smooth = LowPassFilter.filter(0.5f, 1.0f, evt.values, grav);
 	            grav[0] = smooth[0];
 	            grav[1] = smooth[1];
@@ -222,10 +223,10 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 	            grav[2] = evt.values[2];
         	}
         	Orientation.calcOrientation(grav);
-        	ARData.setDeviceOrientation(Orientation.getDeviceOrientation());
-        	ARData.setDeviceOrientationAngle(Orientation.getDeviceAngle());
+        	SpatialData.setDeviceOrientation(Orientation.getDeviceOrientation());
+        	SpatialData.setDeviceOrientationAngle(Orientation.getDeviceAngle());
         } else if (evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-        	if (AugmentedReality.useDataSmoothing) { 
+        	if (useDataSmoothing) { 
 	            smooth = LowPassFilter.filter(2.0f, 4.0f, evt.values, mag);
 	            mag[0] = smooth[0];
 	            mag[1] = smooth[1];
@@ -285,11 +286,11 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
         magneticCompensatedCoord.invert();
 
         // Set the rotation matrix (used to translate all object from lat/lon to x/y/z)
-        ARData.setRotationMatrix(magneticCompensatedCoord);
+        SpatialData.setRotationMatrix(magneticCompensatedCoord);
 
         // Update the pitch and bearing using the phone's rotation matrix
         Navigation.calcPitchBearing(magneticCompensatedCoord);
-        ARData.setAzimuth(Navigation.getAzimuth());
+        SpatialData.setAzimuth(Navigation.getAzimuth());
 
         computing.set(false);
     }
@@ -323,10 +324,10 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
      */
     @Override
     public void onLocationChanged(Location location) {
-        ARData.setCurrentLocation(location);
-        gmf = new GeomagneticField((float) ARData.getCurrentLocation().getLatitude(), 
-                                   (float) ARData.getCurrentLocation().getLongitude(), 
-                                   (float) ARData.getCurrentLocation().getAltitude(), System.currentTimeMillis());
+        SpatialData.setCurrentLocation(location);
+        gmf = new GeomagneticField((float) SpatialData.getCurrentLocation().getLatitude(), 
+                                   (float) SpatialData.getCurrentLocation().getLongitude(), 
+                                   (float) SpatialData.getCurrentLocation().getAltitude(), System.currentTimeMillis());
 
         float dec = (float)Math.toRadians(-gmf.getDeclination());
 

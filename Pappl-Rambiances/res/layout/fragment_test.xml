@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/test_titre_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dip"
+        android:text="Fragment Vue de Test" />
+
+    <TextView
+        android:id="@+id/test_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location:" />
+
+    <TextView
+        android:id="@+id/test_ville"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ville:" />
+
+    <TextView
+        android:id="@+id/test_orientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Orientation:" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/test_button_marqueur1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simulation Marqueur 1" />
+
+    <Button
+        android:id="@+id/test_button_marqueur2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simulation Marqueur 2" />
+
+    <Button
+        android:id="@+id/test_button_marqueur3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simulation Marqueur 3" />
+
+</LinearLayout>
