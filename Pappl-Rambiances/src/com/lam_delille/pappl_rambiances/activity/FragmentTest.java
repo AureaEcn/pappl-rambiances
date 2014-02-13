@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class FragmentTest extends FragmentMarqueurs {
+public class FragmentTest extends FragmentMarkers {
 	private static final int TIME_DELAY_LOCATION_RECEPTION=10000; //Délai maximal aceptable entre l'heure actuelle et l'heure de réception de la location GPS
 	
 	@Override

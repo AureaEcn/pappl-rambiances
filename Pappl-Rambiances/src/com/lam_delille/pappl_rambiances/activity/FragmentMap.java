@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentCarte extends FragmentMarqueurs{
+public class FragmentMap extends FragmentMarkers{
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 	      // Inflate the layout for this fragment

@@ -29,15 +29,15 @@ public class MainActivity extends NetworkActivity {
 	public void onLocationChanged(Location location) {
 		super.onLocationChanged(location); //les méthodes mères mettent à jour la location dans SpatialData
 		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
-		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
-			((FragmentMarqueurs)fragment).onLocationUpdate();
+		if(fragment!=null&&fragment instanceof FragmentMarkers) 
+			((FragmentMarkers)fragment).onLocationUpdate();
 	}
 
 	public void onSensorChanged(SensorEvent evt){
 		super.onSensorChanged(evt); //les méthodes mères mettent à jour l'orientation dans SpatialData
 		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
-		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
-			((FragmentMarqueurs)fragment).onOrientationUpdate();
+		if(fragment!=null&&fragment instanceof FragmentMarkers) 
+			((FragmentMarkers)fragment).onOrientationUpdate();
 	}
 	
 	
@@ -56,7 +56,7 @@ public class MainActivity extends NetworkActivity {
 			replaceMainFragment(new FragmentTest());
 		return true;
 		case(R.id.action_vue_carte_2D):
-			replaceMainFragment(new FragmentCarte());
+			replaceMainFragment(new FragmentMap());
 			return true;
 		case(R.id.action_vue_AR):
 			replaceMainFragment(new FragmentAR());
