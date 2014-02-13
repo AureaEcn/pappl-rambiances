@@ -122,7 +122,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
                 } catch (Exception ex2) {
                     onLocationChanged(SpatialData.hardFix);
                 }
-
+//TODO Ici test hardFix/No location
                 gmf = new GeomagneticField((float) SpatialData.getCurrentLocation().getLatitude(), 
                                            (float) SpatialData.getCurrentLocation().getLongitude(),
                                            (float) SpatialData.getCurrentLocation().getAltitude(), 
@@ -290,8 +290,7 @@ public class SensorsActivity extends Activity implements SensorEventListener, Lo
 
         // Update the pitch and bearing using the phone's rotation matrix
         Navigation.calcPitchBearing(magneticCompensatedCoord);
-        SpatialData.setAzimuth(Navigation.getAzimuth());
-
+       
         computing.set(false);
     }
 

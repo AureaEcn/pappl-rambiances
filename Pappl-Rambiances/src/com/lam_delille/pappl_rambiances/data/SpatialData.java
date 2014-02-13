@@ -1,13 +1,6 @@
 package com.lam_delille.pappl_rambiances.data;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.location.Location;
@@ -24,16 +17,18 @@ import com.lam_delille.pappl_rambiances.common.Orientation.ORIENTATION;
  */
 public abstract class SpatialData {
 
-    private static final String TAG = "ARData";
-    private static final AtomicBoolean dirty = new AtomicBoolean(false);
-    private static final float[] locationArray = new float[3];
+    private static final String TAG = "SpatialData";
+    
 
     /* defaulting to our place */
+    public static final Location noLocation=new Location("null");
     public static final Location hardFix = new Location("ATL");
     static {
         hardFix.setLatitude(39.931261);
         hardFix.setLongitude(-75.051267);
         hardFix.setAltitude(1);
+        
+        
     }
 
    
@@ -41,10 +36,7 @@ public abstract class SpatialData {
     private static Location currentLocation = hardFix;
     private static final Object rotationMatrixLock = new Object();
     private static Matrix rotationMatrix = new Matrix();
-    private static final Object azimuthLock = new Object();
-    private static float azimuth = 0;
-    private static final Object rollLock = new Object();
-    private static float roll = 0;
+
     private static final Object orientationLock = new Object();
     private static ORIENTATION orientation = ORIENTATION.UNKNOWN;
     private static final Object orientationAngleLock = new Object();
@@ -116,58 +108,7 @@ public abstract class SpatialData {
         }
     }
 
-    /**
-     * Add a List of Markers to our Collection.
-     * 
-     * @param markers
-     *            List of Markers to add.
-     */
-   
-    /**
-     * Set the current Azimuth.
-     * 
-     * @param azimuth
-     *            float representing the azimuth.
-     */
-    public static void setAzimuth(float azimuth) {
-        synchronized (SpatialData.azimuthLock) {
-            SpatialData.azimuth = azimuth;
-        }
-    }
 
-    /**
-     * Get the current Azimuth.
-     * 
-     * @return azimuth float representing the azimuth.
-     */
-    public static float getAzimuth() {
-        synchronized (SpatialData.azimuthLock) {
-            return SpatialData.azimuth;
-        }
-    }
-
-    /**
-     * Set the current Roll.
-     * 
-     * @param roll
-     *            float representing the roll.
-     */
-    public static void setRoll(float roll) {
-        synchronized (SpatialData.rollLock) {
-            SpatialData.roll = roll;
-        }
-    }
-
-    /**
-     * Get the current Roll.
-     * 
-     * @return roll float representing the roll.
-     */
-    public static float getRoll() {
-        synchronized (SpatialData.rollLock) {
-            return SpatialData.roll;
-        }
-    }
 
     /**
      * Set the current orientation.

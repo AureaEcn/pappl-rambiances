@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dip"
-        android:text="Fragment Debug" />
+        android:text="Fragment Tests et Debug" />
 
     <TextView
         android:id="@+id/test_location"
