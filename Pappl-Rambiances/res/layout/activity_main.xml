@@ -4,20 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
     
- <LinearLayout
-	        android:id="@+id/fragment_main"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="2"
-	        android:orientation="vertical"
-	         />
+
   <LinearLayout
 	        android:id="@+id/fragment_details"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:layout_weight="1" 
+	        android:layout_weight="2" 
 	        android:orientation="vertical"
 	         />
- 
+  <View
+    android:layout_width="1dp"
+    android:layout_height="fill_parent"
+    android:background="@android:color/darker_gray"/>
+  <LinearLayout
+	        android:id="@+id/fragment_main"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:orientation="vertical"
+	         />
  
 </LinearLayout>

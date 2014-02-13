@@ -9,31 +9,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dip"
-        android:text="Fragment Vue de Test" />
+        android:text="Fragment Debug" />
 
     <TextView
         android:id="@+id/test_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location:" />
-
-    <TextView
-        android:id="@+id/test_ville"
+        android:text="Dernière Location:" />
+    
+<TextView
+        android:id="@+id/test_etat_gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ville:" />
+        android:text="Etat du signal GPS:" />
 
-    <TextView
+ <TextView
         android:id="@+id/test_orientation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Orientation:" />
-
-    <TextView
-        android:id="@+id/textView4"
+ 
+  <TextView
+        android:id="@+id/test_nb_marqueurs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Nombre de marqueurs stockés:" />
+ 
+   
+    
 
     <Button
         android:id="@+id/test_button_marqueur1"

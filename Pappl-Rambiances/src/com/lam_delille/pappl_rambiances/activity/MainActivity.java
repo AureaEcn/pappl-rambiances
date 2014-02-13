@@ -8,6 +8,7 @@ import com.lam_delille.pappl_rambiances.R.layout;
 import com.lam_delille.pappl_rambiances.R.menu;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.hardware.SensorEvent;
 import android.location.Location;
@@ -15,36 +16,33 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends MarkerActivity {
+public class MainActivity extends NetworkActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		initialize();
-
+		replaceMainFragment(new FragmentTest());
+		replaceDetailsFragment(new FragmentDetails());
 	}
-
-	protected void initialize(){
-		FragmentDetails fragmentDetails=new FragmentDetails();
-		FragmentTest fragmentTest=new FragmentTest();
-		FragmentTransaction transaction = this.getFragmentManager()
-				.beginTransaction();
-		transaction.replace(R.id.fragment_main,fragmentTest,"fragementTest");
-		transaction.replace(R.id.fragment_details, fragmentDetails,"fragmentDetails");
-		transaction.commit();
-	}
-
 
 	public void onLocationChanged(Location location) {
-		super.onLocationChanged(location); 
+		super.onLocationChanged(location); //les méthodes mères mettent à jour la location dans SpatialData
 		//TODO Mise à jour des fragments en fonction de la nouvelle location
+		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
+		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
+			((FragmentMarqueurs)fragment).onLocationUpdate();
 	}
 
 	public void onSensorChanged(SensorEvent evt){
-		super.onSensorChanged(evt);
-		//TODO Mettre à jour le fragment AR en fonction de la nouvelle orientation
+		super.onSensorChanged(evt); //les méthodes mères mettent à jour l'orientation dans SpatialData
+		//mise à jour du fragment main si il fait partie des FragmentMarqueurs
+		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
+		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
+			((FragmentMarqueurs)fragment).onOrientationUpdate();
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,27 +51,47 @@ public class MainActivity extends MarkerActivity {
 		return true;
 	}
 	@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        //TODO Mettre en place les actions de l'action bar
-        case(R.id.action_vue_test):
-        	return true;
-        case(R.id.action_vue_carte_2D):
-        	return true;
-        case(R.id.action_vue_AR):
-        	return true;
-        case(R.id.action_options):
-        	return true;
-        case(R.id.action_aide):
-        	return true;
-        default:
-        	return false;
-        }
-       
-        
-        
-    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		//TODO Mettre en place les actions de l'action bar
+		case(R.id.action_vue_test):
+			replaceMainFragment(new FragmentTest());
+		return true;
+		case(R.id.action_vue_carte_2D):
+			replaceMainFragment(new FragmentCarte());
+			return true;
+		case(R.id.action_vue_AR):
+			replaceMainFragment(new FragmentAR());
+			return true;
+		case(R.id.action_options):
+			return true;
+		case(R.id.action_aide):
+			return true;
+		default:
+			return false;
+		}
+	}
 
+	private void replaceMainFragment(Fragment newFragment){
+		Fragment oldFragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
+		if(oldFragment==null ||!oldFragment.getClass().equals(newFragment.getClass())){
+		FragmentTransaction transaction = this.getFragmentManager()
+				.beginTransaction();
+		transaction.replace(R.id.fragment_main,newFragment,newFragment.getClass().getName());
+		transaction.commit();
+		}
+	}
+	
+	private void replaceDetailsFragment(Fragment newFragment){
+		Fragment oldFragment=this.getFragmentManager().findFragmentById(R.id.fragment_details);
+		if(oldFragment==null ||!oldFragment.getClass().equals(newFragment.getClass())){
+		FragmentTransaction transaction = this.getFragmentManager()
+				.beginTransaction();
+		transaction.replace(R.id.fragment_details,newFragment,newFragment.getClass().getName());
+		transaction.commit();
+		}
+	}
 
+	
 
 }
