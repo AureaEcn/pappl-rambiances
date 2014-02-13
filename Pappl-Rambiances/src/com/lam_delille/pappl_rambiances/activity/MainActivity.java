@@ -28,7 +28,6 @@ public class MainActivity extends NetworkActivity {
 
 	public void onLocationChanged(Location location) {
 		super.onLocationChanged(location); //les méthodes mères mettent à jour la location dans SpatialData
-		//TODO Mise à jour des fragments en fonction de la nouvelle location
 		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
 		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
 			((FragmentMarqueurs)fragment).onLocationUpdate();
@@ -36,7 +35,6 @@ public class MainActivity extends NetworkActivity {
 
 	public void onSensorChanged(SensorEvent evt){
 		super.onSensorChanged(evt); //les méthodes mères mettent à jour l'orientation dans SpatialData
-		//mise à jour du fragment main si il fait partie des FragmentMarqueurs
 		Fragment fragment=this.getFragmentManager().findFragmentById(R.id.fragment_main);
 		if(fragment!=null&&fragment instanceof FragmentMarqueurs) 
 			((FragmentMarqueurs)fragment).onOrientationUpdate();

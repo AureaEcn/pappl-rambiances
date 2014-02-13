@@ -15,13 +15,17 @@
         android:id="@+id/test_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dernière Location:" />
-    
-<TextView
-        android:id="@+id/test_etat_gps"
+        android:text="Dernière Location connue:" />
+    <TextView
+        android:id="@+id/test_etat_services_gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Etat du signal GPS:" />
+        android:text="Etat des services GPS:" />
+<TextView
+        android:id="@+id/test_etat_signal_gps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Force du signal GPS:" />
 
  <TextView
         android:id="@+id/test_orientation"

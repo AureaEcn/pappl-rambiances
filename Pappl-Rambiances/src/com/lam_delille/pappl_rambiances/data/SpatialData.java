@@ -21,7 +21,7 @@ public abstract class SpatialData {
     
 
     /* defaulting to our place */
-    public static final Location noLocation=new Location("null");
+    public static final Location noLocation=new Location("noLocation");
     public static final Location hardFix = new Location("ATL");
     static {
         hardFix.setLatitude(39.931261);
